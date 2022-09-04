@@ -39,19 +39,31 @@ class VoteSystemView {
         print("3  ---> display cat breeds and votations score<--------------")
         print("4----->EXIT-------------------------------------------------")
 
+
+
         guard let mainOptionString = readLine(), let mainOption = Int(mainOptionString) else { 
-            showErrorMessage(message: "Ha ocurrido un error al leer la opciòn, intente nuevamente")
+            NotificationView.showErrorMessage(message: "Ha ocurrido un error al leer la opciòn, intente nuevamente")
                         return } 
 
 
     let isValidOption : Bool = mainOption>0 && mainOption<5
 
         if(!isValidOption){
-            showErrorMessage(message: "La opciòn debe estar entre 1 y 4")
+            NotificationView.showErrorMessage(message: "La opciòn debe estar entre 1 y 4")
             return 
         }
-        print(mainOption)
+        switch mainOption{
+            case 1 : showVotationMenu()
+        default: NotificationView.showErrorMessage(message: "Ocurriò un problema inesperado, contacte con el soporte ")
+        }
     }
+    func showVotationMenu(){
+        var totalBreeds : Int?
+        var breedSelected : Breed?
+
+
+    }
+
 
     func showWelcomeMessage(){
         print("------------------------------------------------------------")
@@ -59,21 +71,7 @@ class VoteSystemView {
         print("------------------------------------------------------------")
     }
     
-    func cleanConsole(){
-        print("\u{1B}[1;1H", "\u{1B}[2J")
-    }
-
-    func makeSpaceInConsole(){
-        print("\n\n\n")
-    }
-
-    func showErrorMessage (message : String){
-        cleanConsole()
-        NotificationsView.showAlert(header: "ERROR", content: message , tipe: .Warning)
-        makeSpaceInConsole()
-
-
-    }
+    
     func loadBreeds(){
     voteSystemViewController.loadBreeds()
 

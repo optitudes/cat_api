@@ -1,4 +1,5 @@
 import Foundation
+import Foundation
 class VoteSystemViewController {
 
     var breedsList : [Breed]?
@@ -9,18 +10,20 @@ class VoteSystemViewController {
     let urlAllBreeds = "https://api.thecatapi.com/v1/breeds"
 
     func loadBreeds(){
-
-        var gato : [Breed]?
         print("###inicio de la carga de razas")
         breedsDataService.getFromApi(url: urlAllBreeds,type: [Breed].self ,onComplete:{ breedLoaded in
-        gato = breedLoaded
-        print(breedLoaded)
-        readLine()!
-        print(breedLoaded)
+
+        self.breedsList = breedLoaded
+        print("###tèrmino del llamado callBack")
 
         })
-        print("###tèrmino del llamado callBack")
-        readLine()!
-        print(gato!)
     }
+    func getIntInInterval(message: String, lowerLimit: Int, upperLimit: Int)-> Int{
+        guard let optionString = readLine(), let option = Int(optionString), option>lowerLimit && option<upperLimit else { 
+            NotificationView.showErrorMessage(message: "Ha ocurrido un error al leer la opciòn, intente nuevamente")
+            return -1
+        }
+        return option
+        } 
+
 }
