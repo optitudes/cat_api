@@ -15,6 +15,7 @@ class VoteSystemView {
         tipe = TipeOfActionEnum.goToMainMenu
 
         loadBreeds()
+        readLine()!
         showWelcomeMessage()
 
         while !isExit {

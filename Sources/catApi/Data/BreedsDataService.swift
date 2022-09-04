@@ -1,37 +1,36 @@
 import Foundation
 import FoundationNetworking
 
+typealias Callback<T:Any> = (_ value:T)->Void;
+
 class BreedsDataService{
 
     static let instance: BreedsDataService = BreedsDataService()
 
-    func loadBreeds()  {
 
-        DispatchQueue.main.async {
+    func getFromApi<T : Decodable >(url: String,type: T.Type,onComplete: @escaping Callback<T> )  {
 
-            var breedList : [BreedStruct]?
-            let url = URL(string: "https://api.thecatapi.com/v1/breeds")!
+
+            let url = URL(string:url )!
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             let task = URLSession.shared.dataTask(with: request){ data, response, error in
             guard let data = data, error == nil else {
-                print("###here was a error")
                 return }
 
             do{
-                let breedsDecoded : [BreedStruct] = try JSONDecoder().decode([BreedStruct].self,from: data)
-                breedList=breedsDecoded
-                print(" breeds lent : \(breedsDecoded.count)")
-                print(" breeds : \(breedsDecoded)")
-                print("#### fin get")
+                let dataDecoded : T = try JSONDecoder().decode(T.self,from: data)
+                print("dataDecoded \(dataDecoded)")
+                print("#### fin get y disparo del callback")
+                DispatchQueue.main.async {
+                    onComplete( dataDecoded )
+                }
             }catch{
                 print("###### ERROR : \(error)")
             }
             }
+            print("###fin del metodo loasbreeds ")
             task.resume()
-            print("###### llamando callBack ")
-            callBack( breedsDecoded )
-        }
 
     }
 
