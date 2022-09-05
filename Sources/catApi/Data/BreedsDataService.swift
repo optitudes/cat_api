@@ -20,16 +20,14 @@ class BreedsDataService{
 
             do{
                 let dataDecoded : T = try JSONDecoder().decode(T.self,from: data)
-                print("dataDecoded \(dataDecoded)")
-                print("#### fin get y disparo del callback")
-                DispatchQueue.main.async {
+                print(dataDecoded)
+                DispatchQueue.global().async {
                     onComplete( dataDecoded )
                 }
             }catch{
                 print("###### ERROR : \(error)")
             }
             }
-            print("###fin del metodo loasbreeds ")
             task.resume()
 
     }
