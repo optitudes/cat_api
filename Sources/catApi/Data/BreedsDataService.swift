@@ -9,8 +9,6 @@ class BreedsDataService{
 
 
     func getFromApi<T : Decodable >(url: String,type: T.Type,onComplete: @escaping Callback<T> )  {
-
-
             let url = URL(string:url )!
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
@@ -20,7 +18,6 @@ class BreedsDataService{
 
             do{
                 let dataDecoded : T = try JSONDecoder().decode(T.self,from: data)
-                print(dataDecoded)
                 DispatchQueue.global().async {
                     onComplete( dataDecoded )
                 }
@@ -29,8 +26,5 @@ class BreedsDataService{
             }
             }
             task.resume()
-
     }
-
-
 }

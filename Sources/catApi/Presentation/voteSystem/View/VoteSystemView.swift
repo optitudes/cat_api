@@ -14,15 +14,16 @@ class VoteSystemView {
         tipe = TipeOfActionEnum.goToMainMenu
 
         loadBreeds()
-        readLine()!
-        showWelcomeMessage()
+        VoteSystemElementsView.showWelcomeMessage()
 
         while !isExit {
             
             switch tipe {
-            case .goToMainMenu : showMainMenu()
-            case .goToVotationMenu : showVotationMenu()
+            case .goToMainMenu : goToMainMenu()
+            case .goToVotationMenu : goToVotationMenu()
             case .goToBreedsGroupedByInitialLetter : showBreedsGroupedByInitialLetter()
+                                                     let index : Int = voteSystemViewController.getIntInInterval(message:"seleccione una posiciòn",lowerLimit: 0,upperLimit: voteSystemViewController.totalBreedsLoaded)
+                                                     showBreedDescription(index: (index-1))
             case .goToBreedsAndScore : showBreedsAndScore()
             case .goToExit : isExit = true 
             case .none : isExit = true 
@@ -30,57 +31,45 @@ class VoteSystemView {
         }
     }
 
-    func showMainMenu(){
-
-
-        print("------------------------------------------------------------")
-        print("-----------------🐈MAIN MENÙ OPTIONS🐈----------------------")
-        print("------------------------------------------------------------")
-        print("1  ---> SHOW VOTATION MENÙ<--------------------------------")
-        print("2  ---> DISPLAY CAT BREEDS GROUPED BY INITIAL LETTER<--------")
-        print("3  ---> DISPLAY CAT BREEDS AND VOTATION SCORE<--------------")
-        print("4----->EXIT-------------------------------------------------")
-
-
-        let mainOption : Int = voteSystemViewController.getIntInInterval(message: "Input",lowerLimit: 0,upperLimit: 5)
-
-        switch mainOption{
+    func goToMainMenu(){
+        VoteSystemElementsView.showMainMenu()
+        let mainMenuOption : Int = voteSystemViewController.getIntInInterval(message: "Input",lowerLimit: 1,upperLimit: 4)
+        switch mainMenuOption{
             case 1 : tipe = TipeOfActionEnum.goToVotationMenu
-                     showVotationMenu()
             case 2 : tipe = TipeOfActionEnum.goToBreedsGroupedByInitialLetter
-                     showBreedsGroupedByInitialLetter()
             case 3 : tipe = TipeOfActionEnum.goToBreedsAndScore
-                     showBreedsAndScore()
             case 4 : tipe = TipeOfActionEnum.goToExit
-        default: NotificationView.showErrorMessage(message: "Ocurriò un problema inesperado, contacte con el soporte ")
+        default: VoteSystemElementsView.showErrorMessage(message: "Ocurriò un problema inesperado, contacte con el soporte ")
         }
     }
     func showBreedsGroupedByInitialLetter(){
+
         print("to exit tipe 0")
         for posicion in 0...(voteSystemViewController.totalBreedsLoaded-1){
             let pLDescriptionBreed : PLDescriptionBreed = voteSystemViewController.getDescriptionBreed(index: posicion)
             print("pos :\(posicion+1) name :\(pLDescriptionBreed.name)")
         }
-        let option : Int = voteSystemViewController.getIntInInterval(message:"seleccione una posiciòn",lowerLimit: -1,upperLimit: voteSystemViewController.totalBreedsLoaded+1)
-        if( !(option==0) ){
-            let breedSelected : PLDescriptionBreed = voteSystemViewController.getDescriptionBreed(index: (option-1))
+    }
+    func showBreedDescription(index: Int){
+
+        if( index>=0) {
+            let breedSelected : PLDescriptionBreed = voteSystemViewController.getDescriptionBreed(index: (index))
             print("Descripciòn de \(breedSelected.name) : \(breedSelected.description)")
         } 
+        VoteSystemElementsView.waitUtilEnterIsPressed()
         tipe = TipeOfActionEnum.goToMainMenu
-
     }
+
     func showBreedsAndScore(){
         for index in 0...(voteSystemViewController.totalBreedsLoaded-1){
             let pLScoreBreed : PLScoreBreed = voteSystemViewController.getScoreBreed(index: index)
             let score : Int  = voteSystemViewController.getBreedScore(id: pLScoreBreed.id)
             print("id: \(pLScoreBreed.id) name: \(pLScoreBreed.name)  score : \(score)")
         }
- 
-
-        readLine()!
+        VoteSystemElementsView.waitUtilEnterIsPressed()
         tipe = TipeOfActionEnum.goToMainMenu
     }
-    func showVotationMenu(){
+    func goToVotationMenu(){
 
         let isBreedsEmpty : Bool  = voteSystemViewController.isBreedsEmpty()
         var breedSelected : PLVotationBreed = PLVotationBreed()
@@ -91,42 +80,22 @@ class VoteSystemView {
 
             while(self.tipe == TipeOfActionEnum.goToVotationMenu){
                 breedSelected = voteSystemViewController.getRandomVotationBreed()
-                showBreedForVotation(breedSelected: breedSelected)
-                optionSelected = voteSystemViewController.getIntInInterval(message: "input :",lowerLimit: 0,upperLimit: 5)
+                VoteSystemElementsView.showBreedForVotation(breedSelected: breedSelected)
+
+                optionSelected = voteSystemViewController.getIntInInterval(message: "input :",lowerLimit: 1,upperLimit: 4)
                 switch optionSelected {
                     case 1: voteSystemViewController.addVoteLike(breedId: breedSelected.id)
                     case 2: voteSystemViewController.addVoteDislike(breedId: breedSelected.id)
                     case 3: tipe = TipeOfActionEnum.goToMainMenu
                     default: print("\n")
                 }
-                NotificationView.makeSpaceInConsole()
+                VoteSystemElementsView.makeSpaceInConsole()
             }
             }
 
         }
-
-    func showBreedForVotation(breedSelected: PLVotationBreed){
-        NotificationView.makeSpaceInConsole()
-        print("------------------------------------------------------------")
-        print("----------------- \(breedSelected.name.uppercased())-----------------------")
-        print("------------------------------------------------------------")
-        print("temperament ---> \(breedSelected.temperament) <---")
-        print("origin ---> \(breedSelected.origin) <---")
-        print("------------------------------------------------------------")
-        print("1 --> 👍\n\n2--> 👎\n\n3-->Main menù \n\n4-->No vote")
-    }
-
-
-    func showWelcomeMessage(){
-        print("------------------------------------------------------------")
-        print("----------------- WELCOME TO CAT API-----------------------")
-        print("------------------------------------------------------------")
-    }
-    
-    
     func loadBreeds(){
     voteSystemViewController.loadBreeds()
-
     }
 
 }

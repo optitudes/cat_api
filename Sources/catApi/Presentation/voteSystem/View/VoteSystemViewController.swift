@@ -12,7 +12,6 @@ class VoteSystemViewController {
 
 
     func loadBreeds(){
-
         breedsDataService.getFromApi(url: urlAllBreeds,type: [BLBreed].self ,onComplete:{ breedsLoaded in
 
         self.breedsList = breedsLoaded
@@ -21,17 +20,27 @@ class VoteSystemViewController {
         })
     }
     func getIntInInterval(message: String, lowerLimit: Int, upperLimit: Int)-> Int{
+        var isValidInteger : Bool = false
+        while true {
         print(message)
-        guard let readLineString = readLine(), let integer = Int(readLineString) else { 
-            NotificationView.showErrorMessage(message: "Ha ocurrido un error al leer la opciòn, intente nuevamente")
-            return -1
-        }
-        let isValidInt : Bool = integer>lowerLimit && integer<upperLimit
-        if(isValidInt){
+        
+        let integer : Int = getInt()
+        
+        isValidInteger = integer>=lowerLimit && integer<=upperLimit
+
+        if(isValidInteger){
             return integer
+        } 
+        VoteSystemElementsView.showErrorMessage(message: "El rango permitido es entre \(lowerLimit) y \(upperLimit), intente nuevamente")
         }
-        return -1
     } 
+     
+    func getInt()->Int {
+        guard let readLineString = readLine(), let integer = Int(readLineString) else { 
+            return -10
+        }
+        return integer
+    }
 
 
     func isBreedsEmpty()-> Bool {
@@ -43,7 +52,7 @@ class VoteSystemViewController {
 
         if(!isBreedsEmpty()){
 
-            let indexRandomForBreedsListrBreeds : Int = Int.random(in: 0...totalBreedsLoaded)
+            let indexRandomForBreedsListrBreeds : Int = Int.random(in: 0...totalBreedsLoaded-1)
             breedSelected = PLBreedConverter.parsePLVotationBreed(bLBreed: breedsList[indexRandomForBreedsListrBreeds])
         }
         return breedSelected
