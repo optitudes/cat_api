@@ -6,6 +6,7 @@ typealias Callback<T:Any> = (_ value:T)->Void;
 class BreedsDataService{
 
     static let instance: BreedsDataService = BreedsDataService()
+    let userDefaults = UserDefaults()
 
 
     func getFromApi<T : Decodable >(url: String,type: T.Type,onComplete: @escaping Callback<T> )  {
@@ -26,5 +27,12 @@ class BreedsDataService{
             }
             }
             task.resume()
+    }
+    func addBreedVote(totalVotes: Int, forKey: String){
+        userDefaults.set( totalVotes, forKey: forKey)
+
+    }
+    func getScoreFromBreed (forKey: String)->Int {
+        return userDefaults.integer(forKey: forKey)
     }
 }

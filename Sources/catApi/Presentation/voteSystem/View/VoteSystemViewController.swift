@@ -5,7 +5,6 @@ class VoteSystemViewController {
     var breedsList : [BLBreed] = []
     var totalBreedsLoaded : Int = 0 
     let urlAllBreeds = "https://api.thecatapi.com/v1/breeds"
-    let userDefaults = UserDefaults()
 
     static let instance: VoteSystemViewController = VoteSystemViewController()
     let breedsDataService: BreedsDataService = BreedsDataService()
@@ -65,9 +64,9 @@ class VoteSystemViewController {
         addVote(breedId: breedId,voteValue: -1)
     }
     func addVote(breedId: String,voteValue: Int){
-        let acumulado : Int = userDefaults.integer(forKey: breedId) 
+        let acumulado : Int = breedsDataService.getScoreFromBreed (forKey: breedId) 
         let totalVotes = acumulado + voteValue
-        userDefaults.set( totalVotes, forKey: breedId)
+        breedsDataService.addBreedVote(totalVotes:totalVotes,forKey: breedId)
     }
     func getDescriptionBreed(index: Int)->PLDescriptionBreed {
         let breedSelected : PLDescriptionBreed = PLBreedConverter.parsePLDescriptionBreed(bLBreed: breedsList[index]) 
@@ -84,7 +83,7 @@ class VoteSystemViewController {
 
     }
     func getBreedScore(id: String)-> Int {
-        let totalScore : Int = userDefaults.integer(forKey: id) 
+        let totalScore : Int = breedsDataService.getScoreFromBreed (forKey: id)
         return totalScore 
     }
 
