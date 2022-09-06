@@ -46,14 +46,14 @@ class VoteSystemView {
 
         print("to exit tipe 0")
         for posicion in 0...(voteSystemViewController.totalBreedsLoaded-1){
-            let pLDescriptionBreed : PLDescriptionBreed = voteSystemViewController.getDescriptionBreed(index: posicion)
+            let pLDescriptionBreed : PLDescriptionBreed = voteSystemViewController.getPLDescriptionBreed(index: posicion)
             print("pos :\(posicion+1) name :\(pLDescriptionBreed.name)")
         }
     }
     func showBreedDescription(index: Int){
 
         if( index>=0) {
-            let breedSelected : PLDescriptionBreed = voteSystemViewController.getDescriptionBreed(index: (index))
+            let breedSelected : PLDescriptionBreed = voteSystemViewController.getPLDescriptionBreed(index: (index))
             print("Descripciòn de \(breedSelected.name) : \(breedSelected.description)")
         } 
         VoteSystemElementsView.waitUtilEnterIsPressed()
@@ -62,7 +62,7 @@ class VoteSystemView {
 
     func showBreedsAndScore(){
         for index in 0...(voteSystemViewController.totalBreedsLoaded-1){
-            let pLScoreBreed : PLScoreBreed = voteSystemViewController.getScoreBreed(index: index)
+            let pLScoreBreed : PLScoreBreed = voteSystemViewController.getPLScoreBreed(index: index)
             let score : Int  = voteSystemViewController.getBreedScore(id: pLScoreBreed.id)
             print("id: \(pLScoreBreed.id) name: \(pLScoreBreed.name)  score : \(score)")
         }

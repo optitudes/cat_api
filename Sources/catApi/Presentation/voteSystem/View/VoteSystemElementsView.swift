@@ -54,7 +54,7 @@ class VoteSystemElementsView {
         print("temperament ---> \(breedSelected.temperament) <---")
         print("origin ---> \(breedSelected.origin) <---")
         print("------------------------------------------------------------")
-        print("1 --> 👍\n\n2--> 👎\n\n3-->Main menù \n\n4-->No vote")
+        print("1 --> 👍\n\n2--> 👎\n\n3-->Main menù \n\n4-->Next breed")
     }
 
 }

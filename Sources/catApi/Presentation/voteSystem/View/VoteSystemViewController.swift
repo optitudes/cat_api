@@ -30,7 +30,7 @@ class VoteSystemViewController {
         if(isValidInteger){
             return integer
         } 
-        VoteSystemElementsView.showErrorMessage(message: "El rango permitido es entre \(lowerLimit) y \(upperLimit), intente nuevamente")
+        VoteSystemElementsView.showErrorMessage(message: "The allowed range is between \(lowerLimit) and \(upperLimit), try again...")
         }
     } 
      
@@ -68,11 +68,11 @@ class VoteSystemViewController {
         let totalVotes = acumulado + voteValue
         breedsDataService.addBreedVote(totalVotes:totalVotes,forKey: breedId)
     }
-    func getDescriptionBreed(index: Int)->PLDescriptionBreed {
+    func getPLDescriptionBreed(index: Int)->PLDescriptionBreed {
         let breedSelected : PLDescriptionBreed = PLBreedConverter.parsePLDescriptionBreed(bLBreed: breedsList[index]) 
         return breedSelected
     }
-    func getScoreBreed(index: Int)-> PLScoreBreed {
+    func getPLScoreBreed(index: Int)-> PLScoreBreed {
         let breedSelected : PLScoreBreed = PLBreedConverter.parsePLScoreBreed(bLBreed: breedsList[index]) 
         return breedSelected
     }
