@@ -28,8 +28,8 @@ class BreedsDataService{
             }
             task.resume()
     }
-    func addBreedVote(totalVotes: Int, forKey: String){
-        userDefaults.set( totalVotes, forKey: forKey)
+    func addBreedVote(voteValue: Int, forKey: String){
+        userDefaults.set( voteValue, forKey: forKey)
 
     }
     func getScoreFromBreed (forKey: String)->Int {
