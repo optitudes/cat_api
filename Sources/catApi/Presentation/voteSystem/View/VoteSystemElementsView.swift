@@ -29,8 +29,8 @@ class VoteSystemElementsView {
         print("------------------------------------------------------------")
         print("-----------------🐈MAIN MENÙ OPTIONS🐈----------------------")
         print("------------------------------------------------------------")
-        print("1  ---> SHOW VOTATION MENÙ<--------------------------------")
-        print("2  ---> DISPLAY CAT BREEDS GROUPED BY INITIAL LETTER<--------")
+        print("1  ---> SHOW VOTATION MENÙ<---------------------------------")
+        print("2  ---> DISPLAY CAT BREEDS GROUPED BY INITIAL LETTER<-------")
         print("3  ---> DISPLAY CAT BREEDS AND VOTATION SCORE<--------------")
         print("4----->EXIT-------------------------------------------------")
         print("------------------------------------------------------------")
@@ -42,10 +42,15 @@ class VoteSystemElementsView {
     }
     static func showWelcomeMessage(){
         print("------------------------------------------------------------")
-        print("-----------------!!WELCOME TO CAT API!!-----------------------")
+        print("-----------------!!WELCOME TO CAT API!!---------------------")
         print("------------------------------------------------------------")
     }
+    static func showExitMessage(){
+        print("------------------------------------------------------------")
+        print("-----------------🐈!!THANKS FOR USE CAT API!!🐈-------------")
+        print("------------------------------------------------------------")
 
+    }
     static func showBreedForVotation(breedSelected: PLVotationBreed){
         makeSpaceInConsole()
         print("------------------------------------------------------------")
@@ -54,7 +59,13 @@ class VoteSystemElementsView {
         print("temperament ---> \(breedSelected.temperament) <---")
         print("origin ---> \(breedSelected.origin) <---")
         print("------------------------------------------------------------")
-        print("1 --> 👍\n\n2--> 👎\n\n3-->Main menù \n\n4-->Next breed")
+        print("1 -->Main menù \n\n2-->👍 \n\n3-->👎 \n\n4-->Next breed")
+    }
+    static func showBreedAndScore(pLScoreBreed: PLScoreBreed, score: Int){
+        print("id: \(pLScoreBreed.id) name: \(pLScoreBreed.name)  score : \(score)")
+    }
+    static func showBreedPosAndName(indexForBreedSelected: Int, breedName: String){
+        print("pos :\(indexForBreedSelected+1) name :\(breedName)")
     }
 
 }

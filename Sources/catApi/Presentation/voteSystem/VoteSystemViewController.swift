@@ -20,7 +20,7 @@ class VoteSystemViewController {
         self.isBreedsAvailable = self.totalBreedsLoaded > 0
         })
     }
-    func getIntFromUser(message: String, minimunAllowedInteger: Int, maximumAllowedInteger: Int)-> Int{
+    func inputIntFromUser(message: String, minimunAllowedInteger: Int, maximumAllowedInteger: Int)-> Int{
         var isValidIntegerFromUser : Bool = false
 
         while true {
@@ -46,11 +46,11 @@ class VoteSystemViewController {
 
 
     func addVoteLike(breedId: String){
-        addVote(breedId: breedId, voteValue: 1)
+        addVote(breedId: breedId, voteValue: CAConstans.likeVoteValue)
     }
     
     func addVoteDislike(breedId: String){
-        addVote(breedId: breedId,voteValue: -1)
+        addVote(breedId: breedId,voteValue: CAConstans.dislikeVoteValue)
     }
 
     func addVote(breedId: String,voteValue: Int){
